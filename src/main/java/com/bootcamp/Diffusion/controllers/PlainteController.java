@@ -1,6 +1,7 @@
 package com.bootcamp.Diffusion.controllers;
 
 import com.bootcamp.Diffusion.services.PlainteService;
+import com.bootcamp.entities.Etape;
 import com.bootcamp.entities.Plainte;
 import com.bootcamp.entities.WorkFlow;
 import com.bootcamp.version.ApiVersions;
@@ -46,8 +47,27 @@ public class PlainteController {
         return new ResponseEntity<>(plainte1, httpStatus);
     }
 
+    // creer une Etape,
+
+    @RequestMapping(method = RequestMethod.POST,value = "/etape")
+    @ApiVersions({"1.0"})
+    @ApiOperation(value = "Create une etape de traitement de plainte", notes = "Create une etape de traitement de plainte")
+    public ResponseEntity<Etape> creerEtape(Etape etape) throws FileNotFoundException, IOException, IOException {
+        HttpStatus httpStatus = null;
+        Etape etape1 = new Etape();
+
+        try {
+            etape1 = plainteService.createEtape(etape);
+            httpStatus = HttpStatus.OK;
+        }catch (SQLException exception){
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(etape1, httpStatus);
+    }
+
     //consulter une plainte a partir de la reference
-    @RequestMapping(method = RequestMethod.GET, value = "consulter/{reference}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{reference}")
     @ApiVersions({"1.0"})
     @ApiOperation(value = "consulter une plainte apartir de la reference", notes = "consulter une plainte apartir de la reference")
     public ResponseEntity<Plainte> getPlaineByReference(@PathVariable(name = "reference") String reference) throws FileNotFoundException, IOException, IOException {
@@ -64,6 +84,41 @@ public class PlainteController {
         return new ResponseEntity<>(plainte, httpStatus);
     }
 
+    //consulter la liste des plaintes
+    @RequestMapping(method = RequestMethod.GET)
+    @ApiVersions({"1.0"})
+    @ApiOperation(value = "consulter toutes les plaintes ", notes = "consulter la liste des plaintes ")
+    public ResponseEntity<List<Plainte>> getPlaintesList() throws FileNotFoundException, IOException, IOException {
+        HttpStatus httpStatus = null;
+        List<Plainte> plainteList = new ArrayList<>();
+
+        try {
+            plainteList = plainteService.readPlainte();
+            httpStatus = HttpStatus.OK;
+        }catch (SQLException exception){
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<List<Plainte>>(plainteList, httpStatus);
+    }
+
+    //consulter la liste des etapes
+    @RequestMapping(method = RequestMethod.GET,value = "/etapes/")
+    @ApiVersions({"1.0"})
+    @ApiOperation(value = "consulter toutes les etapes ", notes = "consulter la liste des etapes ")
+    public ResponseEntity<List<Etape>> getEtapesList() throws FileNotFoundException, IOException, IOException {
+        HttpStatus httpStatus = null;
+        List<Etape> etapeList = new ArrayList<>();
+
+        try {
+            etapeList = plainteService.readEtape();
+            httpStatus = HttpStatus.OK;
+        }catch (SQLException exception){
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<List<Etape>>(etapeList, httpStatus);
+    }
     //Suivre une plainte a partir d'une reference
     @RequestMapping(method = RequestMethod.GET, value = "suivre/{reference}")
     @ApiVersions({"1.0"})
