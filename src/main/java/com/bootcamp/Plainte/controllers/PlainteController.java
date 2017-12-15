@@ -1,6 +1,6 @@
-package com.bootcamp.Diffusion.controllers;
+package com.bootcamp.Plainte.controllers;
 
-import com.bootcamp.Diffusion.services.PlainteService;
+import com.bootcamp.Plainte.services.PlainteService;
 import com.bootcamp.entities.Plainte;
 import com.bootcamp.entities.WorkFlow;
 import com.bootcamp.version.ApiVersions;
@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class PlainteController {
     @RequestMapping(method = RequestMethod.POST)
     @ApiVersions({"1.0"})
     @ApiOperation(value = "Create a new plainte", notes = "Create a new plainte")
-    public ResponseEntity<Plainte> sePlaindre(Plainte plainte) throws FileNotFoundException, IOException, IOException {
+    public ResponseEntity<Plainte> sePlaindre(Plainte plainte) throws FileNotFoundException, IOException, IOException, MessagingException {
         HttpStatus httpStatus = null;
         Plainte plainte1 = new Plainte();
 
@@ -105,20 +106,22 @@ public class PlainteController {
         return new ResponseEntity<>(plainte, httpStatus);
     }
 
-    // changer l'eatpe d'une plainte
+    // changer l'etape d'une plainte
     @RequestMapping(method = RequestMethod.GET,value = "/{idPlainte}/{idEtape}")
     @ApiVersions({"1.0"})
     @ApiOperation(value = "change level of a plainte", notes = "change level of a plainte")
     public ResponseEntity<List<WorkFlow>> setPlainteLevel(@PathVariable(name = "idPlainte") int idPlainte, @PathVariable(name = "idEtape") int idEtape) throws FileNotFoundException, IOException, IOException {
         HttpStatus httpStatus = null;
         List<WorkFlow> returWorkFlows = new ArrayList<>();
-        Plainte plainte = new Plainte();
 
         try {
             WorkFlow workFlow = new WorkFlow();
             workFlow.setIdEtape(idEtape);
             workFlow.setIdPlainte(idPlainte);
             plainteService.createWorFlow(workFlow);
+
+            Plainte plainte = plainteService.readPlainte(idPlainte);
+            plainte.setEtapes(plainte.getEtapes()+"-"+plainteService.readEtape(idEtape).getNom());
 
             returWorkFlows = plainteService.readWorkFlowByIdPlainte(idPlainte);
             httpStatus = HttpStatus.OK;
@@ -148,23 +151,15 @@ public class PlainteController {
 //
 //    }
 //
-//    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-//    @ApiVersions({"1.0"})
-//    @ApiOperation(value = "Read a plainte", notes = "Read a plainte")
-//    public ResponseEntity<Plainte> read(@PathVariable(name = "id") int id) {
-//
-//        HttpStatus httpStatus = null;
-//        Plainte plainte = new Plainte();
-//        try {
-//            plainte = plainteService.read(id);
-//            httpStatus = HttpStatus.OK;
-//        }catch (SQLException exception){
-//
-//            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-//        }
-//
-//        return new ResponseEntity<Plainte>(plainte, httpStatus);
-//    }
+    @RequestMapping(method = RequestMethod.GET, value = "/msg/{msg}")
+    @ApiVersions({"1.0"})
+    @ApiOperation(value = "get meassage", notes = "get message")
+    public ResponseEntity<String> read(@PathVariable(name = "message") String message) {
+
+        HttpStatus httpStatus = null;
+
+        return new ResponseEntity<>(message, httpStatus);
+    }
 //
 //    @RequestMapping(method = RequestMethod.GET)
 //    @ApiVersions({"1.0"})
