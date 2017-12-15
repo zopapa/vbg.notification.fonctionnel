@@ -52,26 +52,12 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.8.RELEASE)
 
-[32m2017-12-15 09:52:08.072 WAT [background-preinit] o.h.v.i.u.Version INFO : HV000001: Hibernate Validator 5.3.5.Final
-[m[EL Info]: 2017-12-15 09:54:29.706--ServerSession(208194981)--EclipseLink, version: Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd
-[EL Info]: connection: 2017-12-15 09:54:30.873--ServerSession(208194981)--file:/home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/target/classes/_vbgDatabasePU login successful
+[32m2017-12-15 10:50:19.328 WAT [background-preinit] o.h.v.i.u.Version INFO : HV000001: Hibernate Validator 5.3.5.Final
+[m[EL Info]: 2017-12-15 10:51:27.737--ServerSession(177837750)--EclipseLink, version: Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd
+[EL Info]: connection: 2017-12-15 10:51:29.373--ServerSession(177837750)--file:/home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/target/classes/_vbgDatabasePU login successful
 <?xml version="1.0" encoding="UTF-8"?>
 <octopush>
-  <error_code>501</error_code>
+  <error_code>117</error_code>
 </octopush>
 
-<?xml version="1.0" encoding="UTF-8"?>
-<octopush>
-  <error_code>501</error_code>
-</octopush>
-
-<?xml version="1.0" encoding="UTF-8"?>
-<octopush>
-  <error_code>501</error_code>
-</octopush>
-
-<?xml version="1.0" encoding="UTF-8"?>
-<octopush>
-  <error_code>501</error_code>
-</octopush>
-
+<?xml version="1.0" encoding="UTF-8"?><octopush>  <error_code>000</error_code>  <cost>0.162</cost>  <balance>10.215</balance>  <ticket>SMS225080005a339b2f3ca23</ticket>  <sending_date>1513331503</sending_date>  <number_of_sendings>2</number_of_sendings>  <currency_code>€</currency_code>  <successs>    <success>      <recipient>0022996344200</recipient>      <country_code>BJ</country_code>      <cost>0.081</cost>      <sms_needed>1</sms_needed>    </success>    <success>      <recipient>0022966168535</recipient>      <country_code>BJ</country_code>      <cost>0.081</cost>      <sms_needed>1</sms_needed>    </success>  </successs>  <failures/></octopush>

@@ -27,7 +27,7 @@ public class MailSender {
 
     private static String USER_NAME = "bignonfebron";  // GMail user name (just the part before "@gmail.com")
     private static String PASSWORD = "amuztadjitadjidation"; // GMail password
-    private static String[] RECIPIENT = {"mboabello@yahoo.fr", "archange.jb@gmail.com"};
+    private static String[] RECIPIENT = {"unis.gnacadja@gmail.com"};
     private static String SUBJECT = "CPS CHITé enfant d'autrui est entrain de se faire battre !!";
 
     public static void sendFromGMail(String body) throws MessagingException {
