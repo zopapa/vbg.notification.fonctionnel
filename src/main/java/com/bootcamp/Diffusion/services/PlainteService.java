@@ -52,7 +52,8 @@ public class PlainteService implements DatabaseConstants {
     public Plainte sendPlainte(Plainte plainte) throws SQLException,IOException {
         Plainte plainte1 = this.createPlainte(plainte);
         OctoPushClient octopushClient = new OctoPushClient();
-        octopushClient.sendSms(plainte1.getContenu()+"\n Reference de le plainte: "+plainte1.getReference());
+        octopushClient.sendSms(plainte1.getContenu()+"\n Votre Ref#: "+plainte1.getReference());
+
 
         return plainte1;
     }
