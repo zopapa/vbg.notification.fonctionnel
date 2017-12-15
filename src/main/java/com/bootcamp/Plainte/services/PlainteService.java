@@ -67,7 +67,6 @@ public class PlainteService implements DatabaseConstants {
         "N° du(de la) Plaignant(e):  "+plainte1.getPlaignantPhone()+ "\n"+
         "Mail du(de la) Plaignant(e):  "+plainte1.getPlaignantEmail()+"\n"+
         "Message du(de la) Plaignant(e):  "+plainte1.getContenu());
-
         return plainte1;
     }
 

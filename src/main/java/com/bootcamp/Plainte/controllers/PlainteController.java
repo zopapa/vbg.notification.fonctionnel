@@ -165,7 +165,7 @@ public class PlainteController {
     //valider une plainte
     @RequestMapping(method = RequestMethod.PUT, value = "valider/{reference}")
     @ApiVersions({"1.0"})
-    @ApiOperation(value = "Valid a plainte", notes = "Valid a plainte")
+    @ApiOperation(value = "Validate an issue", notes = "Valid a plainte")
     public ResponseEntity<Plainte> update(@PathVariable(name = "reference") String reference) {
 
         HttpStatus httpStatus = null;
@@ -183,7 +183,7 @@ public class PlainteController {
     }
 
     // changer l'etape d'une plainte
-    @RequestMapping(method = RequestMethod.GET,value = "/{idPlainte}/{idEtape}")
+    @RequestMapping(method = RequestMethod.POST,value = "/{idPlainte}/{idEtape}")
     @ApiVersions({"1.0"})
     @ApiOperation(value = "change level of a plainte", notes = "change level of a plainte")
     public ResponseEntity<List<WorkFlow>> setPlainteLevel(@PathVariable(name = "idPlainte") int idPlainte, @PathVariable(name = "idEtape") int idEtape) throws FileNotFoundException, IOException, IOException {
@@ -196,8 +196,8 @@ public class PlainteController {
             workFlow.setIdPlainte(idPlainte);
             plainteService.createWorFlow(workFlow);
 
-            Plainte plainte = plainteService.readPlainte(idPlainte);
-            plainte.setEtapes(plainte.getEtapes()+"-"+plainteService.readEtape(idEtape).getNom());
+          //  Plainte plainte = plainteService.readPlainte(idPlainte);
+           // plainte.setEtapes(plainte.getEtapes()+"-"+plainteService.readEtape(idEtape).getNom());
 
             returWorkFlows = plainteService.readWorkFlowByIdPlainte(idPlainte);
             httpStatus = HttpStatus.OK;

@@ -1,4 +1,12 @@
 [INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.bootcamp:vbg.notificationServices:war:1.0-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.httpcomponents:httpclient:jar -> version 4.5 vs 4.5.2 @ line 32, column 17
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
 [INFO] Building vbg.notificationServices 1.0-SNAPSHOT
@@ -9,11 +17,11 @@
 [INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ vbg.notificationServices ---
 [INFO] Using 'UTF-8' encoding to copy filtered resources.
 [INFO] skip non existing resourceDirectory /home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/src/main/resources
-[INFO] Copying 10 resources
+[INFO] Copying 11 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.3:compile (default-compile) @ vbg.notificationServices ---
 [INFO] Changes detected - recompiling the module!
-[INFO] Compiling 11 source files to /home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/target/classes
+[INFO] Compiling 13 source files to /home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/target/classes
 [INFO] /home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/src/main/java/com/bootcamp/client/OctoPushClient.java: /home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/src/main/java/com/bootcamp/client/OctoPushClient.java uses unchecked or unsafe operations.
 [INFO] /home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/src/main/java/com/bootcamp/client/OctoPushClient.java: Recompile with -Xlint:unchecked for details.
 [INFO] 
@@ -44,5 +52,26 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.8.RELEASE)
 
-[32m2017-12-14 22:26:56.515 WAT [background-preinit] o.h.v.i.u.Version INFO : HV000001: Hibernate Validator 5.3.5.Final
-[m
+[32m2017-12-15 09:52:08.072 WAT [background-preinit] o.h.v.i.u.Version INFO : HV000001: Hibernate Validator 5.3.5.Final
+[m[EL Info]: 2017-12-15 09:54:29.706--ServerSession(208194981)--EclipseLink, version: Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd
+[EL Info]: connection: 2017-12-15 09:54:30.873--ServerSession(208194981)--file:/home/soul/bootcamp/bootcamp.vbg/vbg.notification.fonctionnel/target/classes/_vbgDatabasePU login successful
+<?xml version="1.0" encoding="UTF-8"?>
+<octopush>
+  <error_code>501</error_code>
+</octopush>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<octopush>
+  <error_code>501</error_code>
+</octopush>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<octopush>
+  <error_code>501</error_code>
+</octopush>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<octopush>
+  <error_code>501</error_code>
+</octopush>
+
