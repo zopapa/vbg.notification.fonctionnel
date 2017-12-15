@@ -27,7 +27,7 @@ public class PlainteController {
     @Autowired
     PlainteService plainteService;
 
-    // create une plainte,
+    // create une plainte qui viens d'un mobile ou du web
     // avoir une ref pour suivre une plainte ,
     // envoi msg au cps
     @RequestMapping(method = RequestMethod.POST)
@@ -45,6 +45,25 @@ public class PlainteController {
         }
 
         return new ResponseEntity<>(plainte1, httpStatus);
+    }
+
+    // create une plainte qui viens d'un simple portable
+    @RequestMapping(method = RequestMethod.POST, value = "sms/{sms}")
+    @ApiVersions({"1.0"})
+    @ApiOperation(value = "Create a new plainte from a simple phone", notes = "Create a new plainte from a simple phone")
+    public ResponseEntity<Plainte> sePlaindre(@PathVariable(name = "sms") String msg) throws FileNotFoundException, IOException, IOException, MessagingException {
+        HttpStatus httpStatus = null;
+        Plainte plainte = new Plainte();
+        plainte.setContenu(msg);
+
+        try {
+            plainte = plainteService.sendPlainte(plainte);
+            httpStatus = HttpStatus.OK;
+        }catch (SQLException exception){
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(plainte, httpStatus);
     }
 
     //consulter une plainte a partir de la reference
@@ -151,15 +170,7 @@ public class PlainteController {
 //
 //    }
 //
-    @RequestMapping(method = RequestMethod.GET, value = "/msg/{msg}")
-    @ApiVersions({"1.0"})
-    @ApiOperation(value = "get meassage", notes = "get message")
-    public ResponseEntity<String> read(@PathVariable(name = "message") String message) {
 
-        HttpStatus httpStatus = null;
-
-        return new ResponseEntity<>(message, httpStatus);
-    }
 //
 //    @RequestMapping(method = RequestMethod.GET)
 //    @ApiVersions({"1.0"})
