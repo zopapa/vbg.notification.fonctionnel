@@ -1,10 +1,4 @@
-/**
- * Copyright (c) 2016, AskLytics and/or its affiliates. All rights reserved.
- * <p>
- * ASKLYTICS PROPRIETARY/CONFIDENTIAL. Use is subject to Non-Disclosure Agreement.
- * <p>
- * Created by bilalshah on 20/12/2016
- */
+
 package com.bootcamp.application;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +26,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @ComponentScan({"com.bootcamp"})
 @PropertySources({
-        @PropertySource(value = "classpath:/application.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:/notification.properties", ignoreResourceNotFound = true),
 })
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class, FlywayAutoConfiguration.class})
 @EnableCaching
