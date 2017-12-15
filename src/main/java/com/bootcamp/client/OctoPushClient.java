@@ -32,7 +32,7 @@ public class OctoPushClient {
 
     public void sendSms(String sms) throws IOException {
 
-        String recipients = "0022996344200,0022966168535,0022996545605,0022966772327";
+        String recipients = "0022996344200,0022966168535";
         String uri= "https://www.octopush-dm.com/api/sms?user_login=unis.gnacadja@gmail.com&api_key=1kED1kgHphEztpX7iSoXnCf2V3YvRrL9&sms_text="+sms+"&sms_recipients="+recipients+"&sms_type=FR&sms_sender=Bignon";
 
         MultiValueMap<String, Object> headers = new LinkedMultiValueMap<String, Object>();

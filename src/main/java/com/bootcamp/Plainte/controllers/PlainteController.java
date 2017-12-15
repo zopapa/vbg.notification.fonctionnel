@@ -1,6 +1,6 @@
-package com.bootcamp.Diffusion.controllers;
+package com.bootcamp.Plainte.controllers;
 
-import com.bootcamp.Diffusion.services.PlainteService;
+import com.bootcamp.Plainte.services.PlainteService;
 import com.bootcamp.entities.Etape;
 import com.bootcamp.entities.Plainte;
 import com.bootcamp.entities.WorkFlow;
@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class PlainteController {
     @Autowired
     PlainteService plainteService;
 
-    // create une plainte,
+    // create une plainte qui viens d'un mobile ou du web
     // avoir une ref pour suivre une plainte ,
     // envoi msg au cps
     @RequestMapping(method = RequestMethod.POST)
@@ -42,9 +43,30 @@ public class PlainteController {
             httpStatus = HttpStatus.OK;
         }catch (SQLException exception){
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
 
         return new ResponseEntity<>(plainte1, httpStatus);
+    }
+
+    // create une plainte qui viens d'un simple portable
+    @RequestMapping(method = RequestMethod.POST, value = "sms/{sms}")
+    @ApiVersions({"1.0"})
+    @ApiOperation(value = "Create a new plainte from a simple phone", notes = "Create a new plainte from a simple phone")
+    public ResponseEntity<Plainte> sePlaindreViaPortable(@PathVariable(name = "sms") String msg) throws FileNotFoundException, IOException, IOException, MessagingException {
+        HttpStatus httpStatus = null;
+        Plainte plainte = new Plainte();
+        plainte.setContenu(msg);
+
+        try {
+            plainte = plainteService.sendPlainte(plainte);
+            httpStatus = HttpStatus.OK;
+        }catch (SQLException exception){
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(plainte, httpStatus);
     }
 
     // creer une Etape,
@@ -160,20 +182,22 @@ public class PlainteController {
         return new ResponseEntity<>(plainte, httpStatus);
     }
 
-    // changer l'eatpe d'une plainte
+    // changer l'etape d'une plainte
     @RequestMapping(method = RequestMethod.GET,value = "/{idPlainte}/{idEtape}")
     @ApiVersions({"1.0"})
     @ApiOperation(value = "change level of a plainte", notes = "change level of a plainte")
     public ResponseEntity<List<WorkFlow>> setPlainteLevel(@PathVariable(name = "idPlainte") int idPlainte, @PathVariable(name = "idEtape") int idEtape) throws FileNotFoundException, IOException, IOException {
         HttpStatus httpStatus = null;
         List<WorkFlow> returWorkFlows = new ArrayList<>();
-        Plainte plainte = new Plainte();
 
         try {
             WorkFlow workFlow = new WorkFlow();
             workFlow.setIdEtape(idEtape);
             workFlow.setIdPlainte(idPlainte);
             plainteService.createWorFlow(workFlow);
+
+            Plainte plainte = plainteService.readPlainte(idPlainte);
+            plainte.setEtapes(plainte.getEtapes()+"-"+plainteService.readEtape(idEtape).getNom());
 
             returWorkFlows = plainteService.readWorkFlowByIdPlainte(idPlainte);
             httpStatus = HttpStatus.OK;
@@ -203,23 +227,7 @@ public class PlainteController {
 //
 //    }
 //
-//    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-//    @ApiVersions({"1.0"})
-//    @ApiOperation(value = "Read a plainte", notes = "Read a plainte")
-//    public ResponseEntity<Plainte> read(@PathVariable(name = "id") int id) {
-//
-//        HttpStatus httpStatus = null;
-//        Plainte plainte = new Plainte();
-//        try {
-//            plainte = plainteService.read(id);
-//            httpStatus = HttpStatus.OK;
-//        }catch (SQLException exception){
-//
-//            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-//        }
-//
-//        return new ResponseEntity<Plainte>(plainte, httpStatus);
-//    }
+
 //
 //    @RequestMapping(method = RequestMethod.GET)
 //    @ApiVersions({"1.0"})

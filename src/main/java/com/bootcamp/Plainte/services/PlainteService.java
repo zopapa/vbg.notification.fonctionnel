@@ -1,5 +1,6 @@
-package com.bootcamp.Diffusion.services;
+package com.bootcamp.Plainte.services;
 
+import com.bootcamp.Diffusion.Classes.MailSender;
 import com.bootcamp.client.OctoPushClient;
 import com.bootcamp.commons.constants.DatabaseConstants;
 import com.bootcamp.commons.models.Criteria;
@@ -14,6 +15,7 @@ import com.bootcamp.entities.WorkFlow;
 import java.io.IOException;
 import org.springframework.stereotype.Component;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -49,11 +51,22 @@ public class PlainteService implements DatabaseConstants {
         return workFlow;
     }
 
-    public Plainte sendPlainte(Plainte plainte) throws SQLException,IOException {
+    public Plainte sendPlainte(Plainte plainte) throws SQLException, IOException, MessagingException {
         Plainte plainte1 = this.createPlainte(plainte);
+
+        //alerte SMS au CPS
         OctoPushClient octopushClient = new OctoPushClient();
+
         octopushClient.sendSms(plainte1.getContenu()+"\n Votre Ref#: "+plainte1.getReference());
 
+
+        octopushClient.sendSms(plainte1.getContenu()+"\n Reference de le plainte: "+plainte1.getReference());
+        //alerte MAIL au CPS
+        MailSender.sendFromGMail("Bonsoir, un citoyen viens de se plaindre \n"+
+        "Reference de la plainte:  "+plainte1.getReference()+"\n"+
+        "N° du(de la) Plaignant(e):  "+plainte1.getPlaignantPhone()+ "\n"+
+        "Mail du(de la) Plaignant(e):  "+plainte1.getPlaignantEmail()+"\n"+
+        "Message du(de la) Plaignant(e):  "+plainte1.getContenu());
 
         return plainte1;
     }
@@ -154,6 +167,10 @@ public class PlainteService implements DatabaseConstants {
     public List<WorkFlow> readWorkFlow() throws SQLException {
         List<WorkFlow> workFlows = WorkFlowCRUD.read();
         return workFlows;
+    }
+
+    public String getMsg(String msg){
+        return msg;
     }
 
 }
